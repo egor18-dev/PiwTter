@@ -14,8 +14,38 @@ class AuthController extends BaseController
     }
 
     public function signUp()
-    {
+    {   
         helper('form');
+
         return view('auth/signUp');
+    }
+
+    public function registerUser () {
+        helper('form_validation');
+
+        $validationRules = [
+            'user' => 'required',
+            'password' => 'required|min_length[8]',
+        ];
+
+        $validationMessages = [
+            'user' => [
+                'required' => 'Introdueix un nom.',
+            ],
+            'password' => [
+                'required' => 'Introdueix una contrasenya.',
+                'min_length' => 'La contrasenya ha de tenir 8 caràcters.',
+            ],
+        ];
+
+        if($this->validate($validationRules, $validationMessages)){
+
+            $user = $this->request->getPost('user');
+            $password = $this->request->getPost('password');
+
+            echo "Valid";
+        }else{
+            return view('auth/signUp');
+        }
     }
 }
