@@ -44,7 +44,10 @@ class AuthController extends BaseController
             $password = $this->request->getPost('password');
 
             echo "Valid";
+            die;
         }else{
+            echo "No valid";
+            die;
             return view('auth/signUp');
         }
     }
