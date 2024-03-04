@@ -10,7 +10,7 @@
             <?=form_input(['type' => 'password', 'name' => 'password', 'class' => 'form-control', 'placeholder' => 'Introdueix la teva contrasenya'])?>
         </div>
         <div class="form-group mt-3">
-            <h6 class="fw-normal mb-3">Ja tens usuari? <a class="fw-bold">Inicia sesió</a></h6>
+            <h6 class="fw-normal mb-3">Ja tens usuari? <a class="fw-bold" href="<?php echo base_url('sign-in') ?>">Inicia sesió</a></h6>
             <?=form_submit('btnSubmit', 'Registrar', ['class' => 'btn btn-outline-dark'])?>
         </div>
         <?=form_close()?>
