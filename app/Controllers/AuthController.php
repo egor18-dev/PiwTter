@@ -10,6 +10,7 @@ class AuthController extends BaseController
     public function signIn()
     {
         helper('form');
+        return view('auth/signIn');
     }
 
     public function signUp()
