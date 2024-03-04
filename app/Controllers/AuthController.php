@@ -42,12 +42,8 @@ class AuthController extends BaseController
 
             $user = $this->request->getPost('user');
             $password = $this->request->getPost('password');
-
-            echo "Valid";
-            die;
         }else{
-            echo "No valid";
-            die;
+            session()->setFlashdata('errors', $this->validator->getErrors());
             return view('auth/signUp');
         }
     }

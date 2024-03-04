@@ -15,4 +15,15 @@
         </div>
         <?=form_close()?>
     </div>
+    <?php if (session()->has('errors')): ?>
+        <div class="container-sm mt-3">
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    <?php foreach (session('errors') as $error): ?>
+                        <li><?= esc($error) ?></li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        </div>
+    <?php endif ?>
 <?=$this->endSection()?>
