@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
+use App\Models\UserModel;
+
 class AuthController extends BaseController
 {
     public function signIn()
@@ -39,9 +41,16 @@ class AuthController extends BaseController
         ];
 
         if($this->validate($validationRules, $validationMessages)){
-
             $user = $this->request->getPost('user');
             $password = $this->request->getPost('password');
+            
+            $userData = [
+                'user' => $user,
+                'password' => password_hash($password, PASSWORD_DEFAULT)
+            ];
+        
+            $userModel = new UserModel();
+            $userModel->createUser($userData);
         }else{
             session()->setFlashdata('errors', $this->validator->getErrors());
             return view('auth/signUp');
