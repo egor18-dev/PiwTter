@@ -15,11 +15,11 @@
         </div>
         <?=form_close()?>
     </div>
-    <?php if (session()->has('errors')): ?>
+    <?php if (session()->has('signUpErrors')): ?>
         <div class="container-sm mt-3">
             <div class="alert alert-danger" role="alert">
                 <ul>
-                    <?php foreach (session('errors') as $error): ?>
+                    <?php foreach (session('signUpErrors') as $error): ?>
                         <li><?= esc($error) ?></li>
                     <?php endforeach ?>
                 </ul>

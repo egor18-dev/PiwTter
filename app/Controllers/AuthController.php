@@ -52,7 +52,7 @@ class AuthController extends BaseController
             $userModel = new UserModel();
             $userModel->createUser($userData);
         }else{
-            session()->setFlashdata('errors', $this->validator->getErrors());
+            session()->setFlashdata('signUpErrors', $this->validator->getErrors());
             return view('auth/signUp');
         }
     }
@@ -87,8 +87,13 @@ class AuthController extends BaseController
         
             $userModel = new UserModel();
             $user = $userModel->signIn($userData);
+
+            if(!$user){
+                session()->setFlashdata('signInErrors', ["Contrasenya incorrecta"]);
+                return view('auth/signIn');
+            }
         }else{
-            session()->setFlashdata('errors', $this->validator->getErrors());
+            session()->setFlashdata('signInErrors', $this->validator->getErrors());
             return view('auth/signIn');
         }
     }

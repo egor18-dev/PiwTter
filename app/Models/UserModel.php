@@ -60,7 +60,7 @@ class UserModel extends Model
             return false;
         }
     
-        return true;
+        return $user;
 
     }
 
