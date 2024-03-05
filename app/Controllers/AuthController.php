@@ -17,7 +17,7 @@ class AuthController extends BaseController
 
     public function signUp()
     {   
-        helper('form');
+        helper(['form']); 
 
         return view('auth/signUp');
     }
@@ -56,4 +56,41 @@ class AuthController extends BaseController
             return view('auth/signUp');
         }
     }
+
+    public function login () 
+    {
+        helper('form_validation');
+
+        $validationRules = [
+            'user' => 'required',
+            'password' => 'required|min_length[8]',
+        ];
+
+        $validationMessages = [
+            'user' => [
+                'required' => 'Introdueix un nom.',
+            ],
+            'password' => [
+                'required' => 'Introdueix una contrasenya.',
+                'min_length' => 'La contrasenya ha de tenir 8 caràcters.',
+            ],
+        ];
+
+        if($this->validate($validationRules, $validationMessages)){
+            $user = $this->request->getPost('user');
+            $password = $this->request->getPost('password');
+            
+            $userData = [
+                'user' => $user,
+                'password' => $password
+            ];
+        
+            $userModel = new UserModel();
+            $user = $userModel->signIn($userData);
+        }else{
+            session()->setFlashdata('errors', $this->validator->getErrors());
+            return view('auth/signIn');
+        }
+    }
+
 }

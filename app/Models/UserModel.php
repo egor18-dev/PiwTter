@@ -16,21 +16,17 @@ class UserModel extends Model
 
     protected bool $allowEmptyInserts = false;
 
-    // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    // Validation
     protected $validationRules      = [];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
-    // Callbacks
-    protected $allowCallbacks = true;
     protected $beforeInsert   = [];
     protected $afterInsert    = [];
     protected $beforeUpdate   = [];
@@ -43,6 +39,29 @@ class UserModel extends Model
     public function createUser(array $userData)
     {
         return $this->insert($userData);
+    }
+
+    public function signIn(array $userData)
+    {
+        $username = $userData['user'] ?? null;
+        $password = $userData['password'] ?? null;
+    
+        if ($username === null || $password === null) {
+            return false; 
+        }
+    
+        $user = $this->where('user', $username)->first();
+
+        if ($user === null) {
+            return false; 
+        }
+    
+        if (!password_verify($password, $user['password'])) {
+            return false;
+        }
+    
+        return true;
+
     }
 
 }
