@@ -16,10 +16,22 @@
 <div class="container-fluid p-5">
     <div class="row align-items-top justify-content-center">
         <?php foreach ($posts as $post): ?>
+            <?php if($post->parent_id === null): ?>
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
                             <?php echo $post->text; ?>
+                            <h6>Comentaris: </h6>
+                            <?php foreach($posts as $comment): ?>
+                                    <?php if($comment->parent_id === $post->id) :?>
+                                        <div class="border border-dark rounded p-3 m-3">
+                                            <?php
+                                                if(!empty($comment->text))
+                                                    echo $comment->text; 
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
+                            <?php endforeach; ?>
                             <?=form_open('/addPost', ['id' => 'frmUsers'])?>
                             <textarea name="data"></textarea>
                             <?=form_hidden('post_id', $post->id)?>
@@ -30,6 +42,7 @@
                         </div>
                     </div>
                 </div>
+            <?php endif; ?>
         <?php endforeach; ?>
     </div>
 </div>

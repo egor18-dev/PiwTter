@@ -16,7 +16,7 @@ class TweetsController extends BaseController
         $contentPost = new PostModel();
 
         $data['posts'] = $contentPost->getPosts();
-        
+
         return view('home/home', $data);
     }
 
@@ -58,7 +58,6 @@ class TweetsController extends BaseController
             $contentPost->createPost($postData);
             
             return view('home/home');
-        
         }else{
             session()->setFlashData('uploadPostErrors', $this->validator->getErrors());
             return view('home/add');
