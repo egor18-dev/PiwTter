@@ -14,8 +14,8 @@ class Posts extends Migration
                 'constraint' => 255, 
             ],
             'text' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255, 
+                'type' => 'TEXT', 
+                'null' => true,   
             ],
             'parent_id' => [
                 'type' => 'VARCHAR',

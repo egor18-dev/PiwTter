@@ -14,3 +14,4 @@ $routes->post('/login', 'AuthController::login');
 $routes->get('/home', 'TweetsController::retrieveTweets');
 $routes->get('/add', 'TweetsController::addTweet');
 $routes->post('/addPost', 'TweetsController::AddPost');
+$routes->post('/removePost', 'TweetsController::removePost');

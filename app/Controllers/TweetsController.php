@@ -68,4 +68,14 @@ class TweetsController extends BaseController
         }
 
     }
+
+    public function removePost () 
+    {
+        $postModel = new PostModel();
+        
+        $uuid = $this->request->getPost('uuid');
+        $postModel->deletePost($uuid);
+
+        return redirect()->to('home');
+    }
 }

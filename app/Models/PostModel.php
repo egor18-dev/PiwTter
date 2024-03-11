@@ -56,4 +56,10 @@ class PostModel extends Model
             return array();
         }
     }
+
+    public function deletePost($uuid)
+    {
+        $this->db->table('posts')->where('parent_id', $uuid)->delete();
+        $this->db->table('posts')->where('id', $uuid)->delete();
+    }
 }
