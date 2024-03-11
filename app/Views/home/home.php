@@ -21,7 +21,8 @@
                         <div class="card-body">
                             <?php echo $post->text; ?>
                             <?=form_open('/addPost', ['id' => 'frmUsers'])?>
-                            <textarea></textarea>
+                            <textarea name="data"></textarea>
+                            <?=form_hidden('post_id', $post->id)?>
                             <div class="form-group mt-3">
                                 <?=form_submit('btnSubmit', 'Comentar', ['class' => 'btn btn-outline-dark'])?>
                             </div>
