@@ -13,14 +13,32 @@ class TweetsController extends BaseController
     }
 
     public function addTweet() {
+        helper('form');
         return view('home/add');
     }
 
     public function addPost() {
-        $content = $this->request->getPost('data');
+        helper('form_validation');
 
-        echo $content;
-    
-        die;
+        $validationRules = [
+            'data' => 'required'
+        ];
+
+        $validationMessages = [
+            'data' => [
+                'required' => 'Introdueix informació'
+            ]
+        ];
+
+        if($this->validate($validationRules, $validationMessages)){
+            $content = $this->request->getPost('data');
+
+            echo $content;
+            die;
+        }else{
+            session()->setFlashData('uploadPostErrors', $this->validator->getErrors());
+            return view('home/add');
+        }
+
     }
 }
