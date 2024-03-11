@@ -11,6 +11,8 @@ class TweetsController extends BaseController
 {
     public function retrieveTweets()
     {
+        helper('form');
+
         $contentPost = new PostModel();
 
         $data['posts'] = $contentPost->getPosts();

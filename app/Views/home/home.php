@@ -20,8 +20,12 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <?php echo $post->text; ?>
-                            <strong class="mb-3">Comenta: </strong>
+                            <?=form_open('/addPost', ['id' => 'frmUsers'])?>
                             <textarea></textarea>
+                            <div class="form-group mt-3">
+                                <?=form_submit('btnSubmit', 'Comentar', ['class' => 'btn btn-outline-dark'])?>
+                            </div>
+                            <?=form_close()?>
                         </div>
                     </div>
                 </div>
