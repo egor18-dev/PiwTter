@@ -22,6 +22,7 @@ class TweetsController extends BaseController
 
     public function addTweet() {
         helper('form');
+        
         return view('home/add');
     }
 
@@ -57,7 +58,7 @@ class TweetsController extends BaseController
             $contentPost = new PostModel();
             $contentPost->createPost($postData);
             
-            return view('home/home');
+            return redirect()->to('home');
         }else{
             session()->setFlashData('uploadPostErrors', $this->validator->getErrors());
             return view('home/add');
