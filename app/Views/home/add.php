@@ -5,6 +5,7 @@
         <form action="#" class="border border-dark rounded p-3 w-100">
             <h5>Afegir publicació</h5>
             <textarea id="ID_TEXTAREA"></textarea>
+            <input type="submit" class="btn btn-outline-dark mt-2" value="Publicar">
         </form>
     </div>
 
