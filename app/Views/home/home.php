@@ -20,11 +20,26 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <?php echo $post->text; ?>
+                            <strong class="mb-3">Comenta: </strong>
+                            <textarea></textarea>
                         </div>
                     </div>
                 </div>
         <?php endforeach; ?>
     </div>
 </div>
+
+<script src="<?= base_url('assets/ckeditor/build/ckeditor.js') ?>"></script>
+
+    <script>
+        document.querySelectorAll('textarea').forEach((elem) => {
+            ClassicEditor
+            .create( elem)
+            .catch( error => {
+                console.error( error );
+            } );
+        });
+        
+    </script>
 
 <?=$this->endSection()?>
