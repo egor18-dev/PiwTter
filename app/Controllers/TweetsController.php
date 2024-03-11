@@ -45,8 +45,6 @@ class TweetsController extends BaseController
             $content = $this->request->getPost('data');
             $post_id = $this->request->getPost('post_id');
             
-            $text = 'provaaaaaaaaaaa';
-
             if(!$post_id){
                 $postData = [
                     'id' =>  UUID::v4(),

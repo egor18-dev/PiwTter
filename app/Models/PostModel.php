@@ -12,7 +12,7 @@ class PostModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['text', 'parent_id'];
+    protected $allowedFields    = ['id', 'text', 'parent_id'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -42,6 +42,7 @@ class PostModel extends Model
 
     public function createPost(array $postData)
     {
+        
         return $this->insert($postData);
     }
 

@@ -11,7 +11,7 @@ class Posts extends Migration
         $this->forge->addField([
             'id' => [
                 'type' => 'VARCHAR',
-                'constraint' => 36, 
+                'constraint' => 255, 
             ],
             'text' => [
                 'type' => 'VARCHAR',
@@ -19,7 +19,7 @@ class Posts extends Migration
             ],
             'parent_id' => [
                 'type' => 'VARCHAR',
-                'constraint' => 36, 
+                'constraint' => 255, 
                 'null' => true,
             ],
         ]);
