@@ -15,4 +15,9 @@ class TweetsController extends BaseController
     public function addTweet() {
         return view('home/add');
     }
+
+    public function addPost() {
+        echo "Hello";
+        die;
+    }
 }
