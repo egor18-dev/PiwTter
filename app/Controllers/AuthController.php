@@ -89,8 +89,10 @@ class AuthController extends BaseController
             $user = $userModel->signIn($userData);
 
             if(!$user){
-                session()->setFlashdata('signInErrors', ["Contrasenya incorrecta"]);
+                session()->setFlashdata('signInErrors', ["Usuari o contrasenya incorrecta"]);
                 return view('auth/signIn');
+            }else{
+                return view('home/home');
             }
         }else{
             session()->setFlashdata('signInErrors', $this->validator->getErrors());

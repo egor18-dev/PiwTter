@@ -6,7 +6,12 @@
     background-size: cover;
     background-attachment: fixed;
     height: 30vh;">
-    <h1 class="fw-normal text-uppercase text-white">Piulades</h1>
+    <h1 class="fw-normal text-uppercase text-white">Hola</h1>
+</div>
+<div class="container-fluid d-flex align-items-center justify-content-center p-3 bg-dark">
+    <nav>
+        <a href="#" class="bg-white text-dark rounded p-2 text-uppercase">Afegir publicació</a>
+    </nav>
 </div>
 <div class="container-fluid p-5">
     <div class="row align-items-center justify-content-center">
@@ -41,4 +46,5 @@
         </div>
     </div>
 </div>
+
 <?=$this->endSection()?>
