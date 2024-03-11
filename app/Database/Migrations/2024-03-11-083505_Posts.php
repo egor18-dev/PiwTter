@@ -22,6 +22,10 @@ class Posts extends Migration
                 'constraint' => 255, 
                 'null' => true,
             ],
+            'created_at' => [
+                'type' => 'DATE',
+                'default' => date("Y-m-d"),
+            ],
         ]);
 
         $this->forge->addKey('id', true);
@@ -29,7 +33,6 @@ class Posts extends Migration
         $this->forge->addForeignKey('parent_id', 'posts', 'id');
 
         $this->forge->createTable('posts');
-
     }
 
     public function down()
