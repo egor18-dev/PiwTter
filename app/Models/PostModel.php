@@ -44,4 +44,15 @@ class PostModel extends Model
     {
         return $this->insert($postData);
     }
+
+    public function getPosts() 
+    {
+        $query = $this->db->table('posts')->get();
+
+        if ($query->getNumRows() > 0) {
+            return $query->getResult();
+        } else {
+            return array();
+        }
+    }
 }

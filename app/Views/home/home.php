@@ -14,36 +14,16 @@
     </nav>
 </div>
 <div class="container-fluid p-5">
-    <div class="row align-items-center justify-content-center">
-        <div class="col-lg-3 overflow-hidden border border-dark rounded p-3 m-2">
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem blanditiis repellendus quos aspernatur inventore, sit nulla sint vero sequi, accusantium consequuntur eligendi animi architecto adipisci doloremque voluptates deserunt, ipsa provident?
-            </p>
-        </div>
-      
-        <div class="col-lg-3 overflow-hidden border border-dark rounded p-3 m-2">
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem blanditiis repellendus quos aspernatur inventore, sit nulla sint vero sequi, accusantium consequuntur eligendi animi architecto adipisci doloremque voluptates deserunt, ipsa provident?
-            </p>
-        </div>
-      
-        <div class="col-lg-3 overflow-hidden border border-dark rounded p-3 m-2">
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem blanditiis repellendus quos aspernatur inventore, sit nulla sint vero sequi, accusantium consequuntur eligendi animi architecto adipisci doloremque voluptates deserunt, ipsa provident?
-            </p>
-        </div>
-      
-        <div class="col-lg-3 overflow-hidden border border-dark rounded p-3 m-2">
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem blanditiis repellendus quos aspernatur inventore, sit nulla sint vero sequi, accusantium consequuntur eligendi animi architecto adipisci doloremque voluptates deserunt, ipsa provident?
-            </p>
-        </div>
-      
-        <div class="col-lg-3 overflow-hidden border border-dark rounded p-3 m-2">
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem blanditiis repellendus quos aspernatur inventore, sit nulla sint vero sequi, accusantium consequuntur eligendi animi architecto adipisci doloremque voluptates deserunt, ipsa provident?
-            </p>
-        </div>
+    <div class="row align-items-top justify-content-center">
+        <?php foreach ($posts as $post): ?>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <?php echo $post->text; ?>
+                        </div>
+                    </div>
+                </div>
+        <?php endforeach; ?>
     </div>
 </div>
 
