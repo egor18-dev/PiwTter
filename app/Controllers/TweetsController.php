@@ -7,6 +7,8 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 use App\Models\PostModel;
 
+use App\Libraries\UUID;
+
 class TweetsController extends BaseController
 {
     public function retrieveTweets()
@@ -28,7 +30,7 @@ class TweetsController extends BaseController
 
     public function addPost() {
         helper('form_validation');
-
+    
         $validationRules = [
             'data' => 'required'
         ];
@@ -42,14 +44,17 @@ class TweetsController extends BaseController
         if($this->validate($validationRules, $validationMessages)){
             $content = $this->request->getPost('data');
             $post_id = $this->request->getPost('post_id');
-
+            
+            $text = 'provaaaaaaaaaaa';
 
             if(!$post_id){
                 $postData = [
+                    'id' =>  UUID::v4(),
                     'text' => $content
                 ];
             }else{
                 $postData = [
+                    'id' =>  UUID::v4(),
                     'text' => $content,
                     'parent_id' => $post_id
                 ];

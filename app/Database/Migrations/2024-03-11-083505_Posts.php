@@ -10,19 +10,16 @@ class Posts extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => true,
-                'auto_increment' => true,
+                'type' => 'VARCHAR',
+                'constraint' => 36, 
             ],
             'text' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255, 
             ],
             'parent_id' => [
-                'type' => 'INT',
-                'constraint' => 5,
-                'unsigned' => true,
+                'type' => 'VARCHAR',
+                'constraint' => 36, 
                 'null' => true,
             ],
         ]);
@@ -32,6 +29,7 @@ class Posts extends Migration
         $this->forge->addForeignKey('parent_id', 'posts', 'id');
 
         $this->forge->createTable('posts');
+
     }
 
     public function down()
