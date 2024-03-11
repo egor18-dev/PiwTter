@@ -17,7 +17,10 @@ class TweetsController extends BaseController
     }
 
     public function addPost() {
-        echo "Hello";
+        $content = $this->request->getPost('data');
+
+        echo $content;
+    
         die;
     }
 }
