@@ -11,4 +11,8 @@ class TweetsController extends BaseController
     {
         return view('home/home');
     }
+
+    public function addTweet() {
+        return view('home/add');
+    }
 }

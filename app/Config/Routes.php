@@ -12,3 +12,4 @@ $routes->post('/register-user', 'AuthController::registerUser');
 $routes->post('/login', 'AuthController::login');
 
 $routes->get('/home', 'TweetsController::retrieveTweets');
+$routes->get('/add', 'TweetsController::addTweet');

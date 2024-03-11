@@ -10,7 +10,7 @@
 </div>
 <div class="container-fluid d-flex align-items-center justify-content-center p-3 bg-dark">
     <nav>
-        <a href="#" class="bg-white text-dark rounded p-2 text-uppercase">Afegir publicació</a>
+        <a href="/add" class="bg-white text-dark rounded p-2 text-uppercase">Afegir publicació</a>
     </nav>
 </div>
 <div class="container-fluid p-5">
