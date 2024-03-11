@@ -22,16 +22,16 @@
                             <?php echo $post->text; ?>
                             <div class="row w-100">
                                 <div class="col-lg-3 m-2 p-0">
-                                <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
+                                    <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
                                     <?php echo form_hidden('uuid', $post->id); ?>
                                     <?php echo form_submit('btnDelete', 'Editar', ['class' => 'btn btn-outline-dark w-100']); ?>
-                                <?php echo form_close(); ?>
+                                    <?php echo form_close(); ?>
                                 </div>
                                 <div class="col-lg-3 m-2 p-0">
-                                <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
+                                    <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
                                     <?php echo form_hidden('uuid', $post->id); ?>
                                     <?php echo form_submit('btnDelete', 'Eliminar', ['class' => 'btn btn-outline-danger w-100']); ?>
-                                <?php echo form_close(); ?>
+                                    <?php echo form_close(); ?>
                                 </div>
                             </div>
                             <h6>Comentaris: </h6>
@@ -42,6 +42,10 @@
                                         if (!empty($comment->text))
                                             echo $comment->text;
                                         ?>
+                                        <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
+                                            <?php echo form_hidden('uuid', $comment->id); ?>
+                                            <?php echo form_submit('btnDelete', 'Eliminar', ['class' => 'btn btn-outline-danger w-100']); ?>
+                                        <?php echo form_close(); ?>
                                     </div>
                                 <?php endif; ?>
                             <?php endforeach; ?>
