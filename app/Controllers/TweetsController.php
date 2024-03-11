@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
+use App\Models\PostModel;
+
 class TweetsController extends BaseController
 {
     public function retrieveTweets()
@@ -33,8 +35,12 @@ class TweetsController extends BaseController
         if($this->validate($validationRules, $validationMessages)){
             $content = $this->request->getPost('data');
 
-            echo $content;
-            die;
+            $postData = [
+                'text' => $content
+            ];
+            
+            $contentPost = new PostModel();
+            $contentPost->createPost($postData);
         }else{
             session()->setFlashData('uploadPostErrors', $this->validator->getErrors());
             return view('home/add');
