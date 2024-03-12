@@ -26,11 +26,18 @@ class Posts extends Migration
                 'type' => 'DATE',
                 'default' => date("Y-m-d"),
             ],
+            'user_ref_id' => [
+                'type'           => 'INT',
+                'constraint'     => 5,
+                'unsigned' => true,
+                'null' => false
+            ]
         ]);
 
         $this->forge->addKey('id', true);
 
         $this->forge->addForeignKey('parent_id', 'posts', 'id');
+        $this->forge->addForeignKey('user_ref_id', 'users', 'user_id');
 
         $this->forge->createTable('posts');
     }

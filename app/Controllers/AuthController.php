@@ -9,6 +9,13 @@ use App\Models\UserModel;
 
 class AuthController extends BaseController
 {
+
+    public function __construct()
+    {
+        // Importar la sesión de CodeIgniter
+        $this->session = \Config\Services::session();
+    }
+
     public function signIn()
     {
         helper('form');
@@ -51,6 +58,7 @@ class AuthController extends BaseController
         
             $userModel = new UserModel();
             $userModel->createUser($userData);
+            return redirect()->to('/sign-in');
         }else{
             session()->setFlashdata('signUpErrors', $this->validator->getErrors());
             return view('auth/signUp');
@@ -60,6 +68,7 @@ class AuthController extends BaseController
     public function login () 
     {
         helper('form_validation');
+        $session = \Config\Services::session();
 
         $validationRules = [
             'user' => 'required',
@@ -92,7 +101,8 @@ class AuthController extends BaseController
                 session()->setFlashdata('signInErrors', ["Usuari o contrasenya incorrecta"]);
                 return view('auth/signIn');
             }else{
-                return view('home/home');
+                session()->set(['user_id' => $user['user_id']]);
+                return redirect()->to('home');
             }
         }else{
             session()->setFlashdata('signInErrors', $this->validator->getErrors());

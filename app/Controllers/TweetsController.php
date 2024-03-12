@@ -18,6 +18,7 @@ class TweetsController extends BaseController
         $contentPost = new PostModel();
 
         $data['posts'] = $contentPost->getPosts();
+        $data['user_id'] = session()->get('user_id');
 
         return view('home/home', $data);
     }
@@ -44,17 +45,20 @@ class TweetsController extends BaseController
         if($this->validate($validationRules, $validationMessages)){
             $content = $this->request->getPost('data');
             $post_id = $this->request->getPost('post_id');
-            
+            $user_id = intval(session()->get('user_id'));
+
             if(!$post_id){
                 $postData = [
                     'id' =>  UUID::v4(),
-                    'text' => $content
+                    'text' => $content,
+                    'user_ref_id' => $user_id
                 ];
             }else{
                 $postData = [
                     'id' =>  UUID::v4(),
                     'text' => $content,
-                    'parent_id' => $post_id
+                    'parent_id' => $post_id,
+                    'user_ref_id' => $user_id
                 ];
             }
             

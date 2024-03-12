@@ -95,5 +95,6 @@ class Autoload extends AutoloadConfig
      *
      * @var list<string>
      */
-    public $helpers = ['form', 'form_validation', 'captcha'];
+    public $helpers = ['form', 'form_validation', 'session'];
+    
 }
