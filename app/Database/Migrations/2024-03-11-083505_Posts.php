@@ -22,6 +22,10 @@ class Posts extends Migration
                 'constraint' => 255, 
                 'null' => true,
             ],
+            'is_public' => [
+                'type' => 'BOOLEAN',
+                'default' => true
+            ],
             'created_at' => [
                 'type' => 'DATE',
                 'default' => date("Y-m-d H:i:s"),
