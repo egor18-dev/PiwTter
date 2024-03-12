@@ -45,10 +45,14 @@
                                         if (!empty($comment->text))
                                             echo $comment->text;
                                         ?>
-                                        <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
-                                            <?php echo form_hidden('uuid', $comment->id); ?>
-                                            <?php echo form_submit('btnDelete', 'Eliminar', ['class' => 'btn btn-outline-danger w-100']); ?>
-                                        <?php echo form_close(); ?>
+
+                                        <?php if($comment->user_ref_id === $user_id) : ?>
+                                            <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
+                                                <?php echo form_hidden('uuid', $comment->id); ?>
+                                                <?php echo form_submit('btnDelete', 'Eliminar', ['class' => 'btn btn-outline-danger w-100']); ?>
+                                            <?php echo form_close(); ?>
+                                        <?php endif; ?>    
+                                        
                                     </div>
                                 <?php endif; ?>
                             <?php endforeach; ?>
