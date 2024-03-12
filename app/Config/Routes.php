@@ -11,7 +11,7 @@ $routes->get('/sign-in', 'AuthController::signIn');
 $routes->post('/register-user', 'AuthController::registerUser');
 $routes->post('/login', 'AuthController::login');
 
-$routes->get('/home', 'TweetsController::retrieveTweets');
-$routes->get('/add', 'TweetsController::addTweet');
-$routes->post('/addPost', 'TweetsController::AddPost');
-$routes->post('/removePost', 'TweetsController::removePost');
+$routes->get('/home', 'TweetsController::retrieveTweets', ['filter' => 'auth']);
+$routes->get('/add', 'TweetsController::addTweet', ['filter' => 'auth']);
+$routes->post('/addPost', 'TweetsController::AddPost', ['filter' => 'auth']);
+$routes->post('/removePost', 'TweetsController::removePost', ['filter' => 'auth']);

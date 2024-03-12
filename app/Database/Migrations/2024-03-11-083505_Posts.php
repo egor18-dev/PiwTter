@@ -24,7 +24,7 @@ class Posts extends Migration
             ],
             'created_at' => [
                 'type' => 'DATE',
-                'default' => date("Y-m-d"),
+                'default' => date("Y-m-d H:i:s"),
             ],
             'user_ref_id' => [
                 'type'           => 'INT',
