@@ -62,4 +62,10 @@ class PostModel extends Model
         $this->db->table('posts')->where('parent_id', $uuid)->delete();
         $this->db->table('posts')->where('id', $uuid)->delete();
     }
+
+    public function getByUuid($uuid)
+    {
+        $post = $this->where('id', $uuid)->first();
+        return $post;
+    }
 }

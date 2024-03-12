@@ -70,7 +70,6 @@ class TweetsController extends BaseController
             session()->setFlashData('uploadPostErrors', $this->validator->getErrors());
             return view('home/add');
         }
-
     }
 
     public function removePost () 
@@ -81,5 +80,22 @@ class TweetsController extends BaseController
         $postModel->deletePost($uuid);
 
         return redirect()->to('home');
+    }
+
+    public function editPost ()
+    {
+        $postModel = new PostModel();
+        
+        $uuid = $this->request->getPost('uuid');
+
+        $postModel = new PostModel();
+        $post = $postModel->getByUuid($uuid);
+
+        if($post){
+            $data["data"] = $post["text"];
+            return view('home/add', $data);
+        }else{
+            return redirect()->to('home');
+        }
     }
 }
