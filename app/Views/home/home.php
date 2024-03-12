@@ -21,20 +21,22 @@
                         <div class="card-body">
                             <?php echo $post->text; ?>
                             <?php echo "(" . $post->created_at . ")" ?>
-                            <div class="row w-100">
-                                <div class="col-lg-3 m-2 p-0">
-                                    <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
-                                        <?php echo form_hidden('uuid', $post->id); ?>
-                                        <?php echo form_submit('btnDelete', 'Editar', ['class' => 'btn btn-outline-dark w-100']); ?>
-                                    <?php echo form_close(); ?>
-                                </div>
-                                <div class="col-lg-3 m-2 p-0">
-                                    <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
-                                        <?php echo form_hidden('uuid', $post->id); ?>
-                                        <?php echo form_submit('btnDelete', 'Eliminar', ['class' => 'btn btn-outline-danger w-100']); ?>
-                                    <?php echo form_close(); ?>
-                                </div>
-                            </div>
+                            <?php if ($user_id === $post->user_ref_id) : ?>
+                                <div class="row w-100">
+                                    <div class="col-lg-3 m-2 p-0">
+                                        <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
+                                            <?php echo form_hidden('uuid', $post->id); ?>
+                                            <?php echo form_submit('btnDelete', 'Editar', ['class' => 'btn btn-outline-dark w-100']); ?>
+                                        <?php echo form_close(); ?>
+                                    </div>
+                                    <div class="col-lg-3 m-2 p-0">
+                                        <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
+                                            <?php echo form_hidden('uuid', $post->id); ?>
+                                            <?php echo form_submit('btnDelete', 'Eliminar', ['class' => 'btn btn-outline-danger w-100']); ?>
+                                        <?php echo form_close(); ?>
+                                    </div>
+                                </div>      
+                            <?php endif; ?>
                             <h6>Comentaris: </h6>
                             <?php foreach ($posts as $comment) : ?>
                                 <?php if ($comment->parent_id === $post->id) : ?>
