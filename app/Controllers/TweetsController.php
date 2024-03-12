@@ -46,6 +46,8 @@ class TweetsController extends BaseController
             $content = $this->request->getPost('data');
             $post_id = $this->request->getPost('post_id');
             $user_id = intval(session()->get('user_id'));
+            $uuid = $this->request->getPost('uuid');
+            $type = $this->request->getPost('type');
 
             if(!$post_id){
                 $postData = [
@@ -63,8 +65,13 @@ class TweetsController extends BaseController
             }
             
             $contentPost = new PostModel();
-            $contentPost->createPost($postData);
             
+            if("type" === "edit"){
+                $contentPost->createPost($postData);
+            }else{
+                $contentPost->updateByUuid($uuid, $postData);
+            } 
+
             return redirect()->to('home');
         }else{
             session()->setFlashData('uploadPostErrors', $this->validator->getErrors());
@@ -93,6 +100,7 @@ class TweetsController extends BaseController
 
         if($post){
             $data["data"] = $post["text"];
+            $data["uuid"] = $uuid;
             return view('home/add', $data);
         }else{
             return redirect()->to('home');

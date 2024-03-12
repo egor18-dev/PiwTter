@@ -68,4 +68,9 @@ class PostModel extends Model
         $post = $this->where('id', $uuid)->first();
         return $post;
     }
+
+    public function updateByUuid($uuid, array $data)
+    {
+        return $this->update($uuid, $data);
+    }
 }

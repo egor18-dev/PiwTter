@@ -1,20 +1,22 @@
 <?= $this->extend('main') ?>
 <?=$this->section('content')?>
 
+    <?php $data = $data??"";?>
+    <?php $uuid = $uuid??"" ?>
+
     <div class="container-sm min-vh-100 d-flex flex-column align-items-center justify-content-center">
         
         <?=form_open('/addPost', ['id' => 'frmUsers', 'class' => 'border border-dark rounded p-5 w-100'])?>
         <h5 class="mb-3 text-uppercase">Fer publicació</h5>
         <textarea id="ID_TEXTAREA" name="data">
             <?php
-                $data = $data??"";
-
+                
                 if(strlen($data) > 0) echo $data;
             ?>
         </textarea>
         <div class="form-group mt-3">
-            <?php
-            ?>
+            <?=form_hidden('uuid', $uuid);?>
+            <?=form_hidden('type', strlen($data) > 0 ? 'edit' : 'upload');?>
             <?=form_submit('btnSubmit', strlen($data) > 0 ? 'Editar' : 'Afegir' , ['class' => 'btn btn-outline-dark'])?>
         </div>
         <?=form_close()?>
