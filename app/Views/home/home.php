@@ -66,6 +66,7 @@
                             <textarea name="data"></textarea>
                             <?= form_hidden('post_id', $post->id) ?>
                             <div class="form-group mt-3">
+                                 <?=form_hidden('type', 'upload');?>
                                 <?= form_submit('btnSubmit', 'Comentar', ['class' => 'btn btn-outline-dark']) ?>
                             </div>
                             <?= form_close() ?>
