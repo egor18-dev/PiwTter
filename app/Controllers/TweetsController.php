@@ -66,9 +66,9 @@ class TweetsController extends BaseController
             
             $contentPost = new PostModel();
             
-            if("type" === "edit"){
+            if($type === "upload"){
                 $contentPost->createPost($postData);
-            }else{
+            }else if($type === "edit"){
                 $contentPost->updateByUuid($uuid, $postData);
             } 
 
