@@ -38,7 +38,15 @@ class UserModel extends Model
     
     public function createUser(array $userData)
     {
-        return $this->insert($userData);
+        $user = $this->insert($userData);
+    
+        $userRoleData = [
+            'user_id' => $user,
+            'role_id' => 2, 
+        ];
+        $this->db->table('user_roles')->insert($userRoleData);
+
+        return $user;
     }
 
     public function signIn(array $userData)

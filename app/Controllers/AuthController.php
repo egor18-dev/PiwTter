@@ -12,7 +12,6 @@ class AuthController extends BaseController
 
     public function __construct()
     {
-        // Importar la sesión de CodeIgniter
         $this->session = \Config\Services::session();
     }
 
