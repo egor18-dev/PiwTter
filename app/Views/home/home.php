@@ -21,6 +21,7 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <?php echo $post->text; ?>
+                            <?php echo $post->is_public ? 'Public' : 'Privat'; ?>
                             <?php echo "(" . $post->created_at . ")" ?>
                             <?php if ($user_id === $post->user_ref_id) : ?>
                                 <div class="row w-100 justify-content-center align-items-center py-3 mx-auto">
@@ -37,8 +38,9 @@
                                         <?php echo form_close(); ?>
                                     </div>
                                     <div class="col-lg-12 m-0 p-0">
-                                        <?php echo form_open(base_url("removePost"), ['method' => 'post']); ?>
-                                            <?php echo form_hidden('uuid', $post->id); ?>
+                                        <?php echo form_open(base_url("editPost"), ['method' => 'post']); ?>
+                                            <?php echo form_hidden('editPost', $post->id); ?>
+                                            <?php echo form_hidden('is_public', !$post->is_public); ?>
                                             <?php echo form_submit('btnDelete', $post->is_public ? 'Public' : 'Privat', ['class' => 'btn btn-outline-success w-100']); ?>
                                         <?php echo form_close(); ?>
                                     </div>

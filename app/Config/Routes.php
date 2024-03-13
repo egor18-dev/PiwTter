@@ -15,4 +15,5 @@ $routes->get('/home', 'TweetsController::retrieveTweets', ['filter' => 'auth']);
 $routes->get('/add', 'TweetsController::addTweet', ['filter' => 'auth']);
 $routes->post('/addPost', 'TweetsController::AddPost', ['filter' => 'auth']);
 $routes->post('/removePost', 'TweetsController::removePost', ['filter' => 'auth']);
-$routes->post('/editPost', 'TweetsController::editPost', ['filter' => 'auth']);
+$routes->post('/editPost', 'TweetsController::editPostView', ['filter' => 'auth']);
+$routes->post('/editData', 'TweetsController::editPost', ['filter' => 'auth']);

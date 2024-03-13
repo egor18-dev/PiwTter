@@ -47,7 +47,6 @@ class TweetsController extends BaseController
             $post_id = $this->request->getPost('post_id');
             $user_id = intval(session()->get('user_id'));
             $uuid = $this->request->getPost('uuid');
-            $type = $this->request->getPost('type');
 
             if(!$post_id){
                 $postData = [
@@ -65,19 +64,15 @@ class TweetsController extends BaseController
             }
             
             $contentPost = new PostModel();
+            $contentPost->createPost($postData);
             
-            if($type === "upload"){
-                $contentPost->createPost($postData);
-            }else if($type === "edit"){
-                $contentPost->updateByUuid($uuid, $postData);
-            } 
-
             return redirect()->to('home');
         }else{
             session()->setFlashData('uploadPostErrors', $this->validator->getErrors());
             return view('home/add');
         }
     }
+
 
     public function removePost () 
     {
@@ -89,7 +84,7 @@ class TweetsController extends BaseController
         return redirect()->to('home');
     }
 
-    public function editPost ()
+    public function editPostView ()
     {
         $postModel = new PostModel();
         
@@ -105,5 +100,34 @@ class TweetsController extends BaseController
         }else{
             return redirect()->to('home');
         }
+    }
+
+    public function editPost() 
+    {
+        $content = $this->request->getPost('data');
+        $post_id = $this->request->getPost('post_id');
+        $user_id = intval(session()->get('user_id'));
+        $uuid = $this->request->getPost('uuid');
+
+        if(!$post_id){
+            $postData = [
+                'id' =>  UUID::v4(),
+                'text' => $content,
+                'user_ref_id' => $user_id
+            ];
+        }else{
+            $postData = [
+                'id' =>  UUID::v4(),
+                'text' => $content,
+                'parent_id' => $post_id,
+                'user_ref_id' => $user_id
+            ];
+        }
+            
+        $contentPost = new PostModel();
+        $contentPost->updateByUuid($uuid, $postData);
+            
+        return redirect()->to('home');
+        
     }
 }

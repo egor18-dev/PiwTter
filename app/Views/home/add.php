@@ -6,7 +6,7 @@
 
     <div class="container-sm min-vh-100 d-flex flex-column align-items-center justify-content-center">
         
-        <?=form_open('/addPost', ['id' => 'frmUsers', 'class' => 'border border-dark rounded p-5 w-100'])?>
+        <?=form_open( strlen($data) > 0 ? '/editData' : '/addPost', ['id' => 'frmUsers', 'class' => 'border border-dark rounded p-5 w-100'])?>
         <h5 class="mb-3 text-uppercase">Fer publicació</h5>
         <textarea id="ID_TEXTAREA" name="data">
             <?php
