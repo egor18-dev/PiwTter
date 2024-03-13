@@ -16,6 +16,7 @@
     <div class="row align-items-top justify-content-center">
         <?php foreach ($posts as $post) : ?>
             <?php if ($post->parent_id === null) : ?>
+                <?php if (!$post->is_public && $post->user_ref_id === $user_id || $post->is_public) : ?>
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
@@ -72,6 +73,7 @@
                             <?= form_close() ?>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
         <?php endforeach; ?>
