@@ -125,4 +125,14 @@ class TweetsController extends BaseController
         return redirect()->to('home');
         
     }
+
+    public function view ($uuid) 
+    {
+        $contentPost = new PostModel();
+        $post = $contentPost->getByUuid($uuid);
+
+        $data['post'] = $post["text"]??"<p class='text-danger'>No existeix aquesta publicació</p>";
+
+        return view('home/view', $data);
+    }
 }
