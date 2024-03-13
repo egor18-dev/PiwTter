@@ -42,7 +42,7 @@ class UserModel extends Model
     
         $userRoleData = [
             'user_id' => $user,
-            'role_id' => 2, 
+            'role_id' => 2, // Usuari normal
         ];
         $this->db->table('user_roles')->insert($userRoleData);
 
