@@ -110,4 +110,11 @@ class AuthController extends BaseController
         }
     }
 
+    public function logout () 
+    {
+        session()->set(['user_id' => null]);
+
+        return redirect()->to('sign-in');
+    }
+
 }

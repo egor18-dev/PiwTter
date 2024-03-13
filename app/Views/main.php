@@ -13,6 +13,7 @@
             text-decoration: none;
             color: #000;
             cursor: pointer;
+            margin: 0 10px;
         }
 
     </style>
