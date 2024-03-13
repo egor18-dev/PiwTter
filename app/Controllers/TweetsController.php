@@ -111,13 +111,11 @@ class TweetsController extends BaseController
 
         if(!$post_id){
             $postData = [
-                'id' =>  UUID::v4(),
                 'text' => $content,
                 'user_ref_id' => $user_id
             ];
         }else{
             $postData = [
-                'id' =>  UUID::v4(),
                 'text' => $content,
                 'parent_id' => $post_id,
                 'user_ref_id' => $user_id
