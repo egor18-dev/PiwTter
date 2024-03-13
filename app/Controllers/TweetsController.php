@@ -105,20 +105,17 @@ class TweetsController extends BaseController
     public function editPost() 
     {
         $content = $this->request->getPost('data');
-        $post_id = $this->request->getPost('post_id');
-        $user_id = intval(session()->get('user_id'));
         $uuid = $this->request->getPost('uuid');
+        $is_public = $this->request->getPost('is_public')??"";
+        $action = $this->request->getPost('action')??"";
 
-        if(!$post_id){
+        if($action !== ""){
             $postData = [
-                'text' => $content,
-                'user_ref_id' => $user_id
+                'is_public' => !intval($is_public)
             ];
         }else{
             $postData = [
                 'text' => $content,
-                'parent_id' => $post_id,
-                'user_ref_id' => $user_id
             ];
         }
             

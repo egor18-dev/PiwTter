@@ -12,7 +12,7 @@ class PostModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id', 'text', 'parent_id', 'user_ref_id'];
+    protected $allowedFields    = ['id', 'text', 'parent_id', 'user_ref_id', 'is_public'];
 
     protected bool $allowEmptyInserts = false;
 
