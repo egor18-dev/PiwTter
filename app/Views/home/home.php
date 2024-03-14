@@ -25,7 +25,7 @@
                             <?php echo $post->text; ?>
                             <?php echo $post->is_public ? 'Public' : 'Privat'; ?>
                             <?php echo "(" . $post->created_at . ")" ?>
-                            <?php if ($user_id === $post->user_ref_id) : ?>
+                            <?php if ($user_id === $post->user_ref_id || in_array("delete_all_posts", $permissions)) : ?>
                                 <div class="row w-100 justify-content-center align-items-center py-3 mx-auto">
                                     <div class="col-lg-12 m-0 p-0">
                                         <?php echo form_open(base_url("editPost"), ['method' => 'post']); ?>
