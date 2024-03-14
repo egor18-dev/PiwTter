@@ -72,4 +72,28 @@ class UserModel extends Model
 
     }
 
+    public function get_permissions_by_role_id() {
+        $builder = $this->db->table('permissions');
+        $builder->select('permissions.name');
+        $builder->join('role_permissions', 'role_permissions.permission_id = permissions.id');
+        $builder->join('roles', 'roles.id = role_permissions.role_id');
+        $builder->join('user_roles', 'user_roles.role_id = roles.id');
+        $builder->where('user_roles.user_id', session()->get('user_id'));
+    
+        $query = $builder->get();
+    
+        $arr = $query->getResultArray();
+        $names = [];
+
+        for($i = 0; $i < count($arr); $i++)
+        {
+            array_push($names, $arr[$i]["name"]);
+        }
+
+        return $names;
+
+    }
+    
+    
+
 }

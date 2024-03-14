@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
 use App\Models\PostModel;
+use App\Models\UserModel;
 
 use App\Libraries\UUID;
 
@@ -16,9 +17,13 @@ class TweetsController extends BaseController
         helper('form');
 
         $contentPost = new PostModel();
+        $contentUser = new UserModel();
+
+        $permissions = $contentUser->get_permissions_by_role_id();
 
         $data['posts'] = $contentPost->getPosts();
         $data['user_id'] = session()->get('user_id');
+        $data['permissions'] = $permissions;
 
         return view('home/home', $data);
     }
