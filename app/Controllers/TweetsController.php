@@ -112,6 +112,20 @@ class TweetsController extends BaseController
         $postModel = new PostModel();
         
         $uuid = $this->request->getPost('uuid');
+
+        $directory = WRITEPATH . "uploads/" . $uuid;
+
+        if (is_dir($directory)) {
+            $files = glob($directory . '/*');
+            
+            foreach ($files as $file) {
+                if (is_file($file)) {
+                    unlink($file);
+                }
+            }
+
+        }
+
         $postModel->deletePost($uuid);
 
         return redirect()->to('home');
