@@ -18,7 +18,8 @@
 
         .main img{
             width: 100%;
-            height: auto;
+            height: 250px;
+            border-radius: 15px;
             object-fit: cover;
         }
 

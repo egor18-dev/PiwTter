@@ -55,10 +55,12 @@
                             <?php foreach ($posts as $comment) : ?>
                                 <?php if ($comment->parent_id === $post->id) : ?>
                                     <div class="border border-dark rounded p-3 m-3">
+                                        <div class="main">
                                         <?php
-                                        if (!empty($comment->text))
-                                            echo $comment->text;
+                                            if (!empty($comment->text))
+                                                echo  $comment->text;
                                         ?>
+                                        </div>
 
                                         <?php if($comment->user_ref_id === $user_id) : ?>
                                             <?php echo form_open(base_url("editPost"), ['method' => 'post']); ?>
