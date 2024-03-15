@@ -14,7 +14,7 @@ class Posts extends Migration
                 'constraint' => 255, 
             ],
             'text' => [
-                'type' => 'TEXT', 
+                'type' => 'LONGTEXT', 
                 'null' => true,   
             ],
             'parent_id' => [
