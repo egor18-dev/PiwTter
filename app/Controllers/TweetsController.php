@@ -56,22 +56,26 @@ class TweetsController extends BaseController
             $files = $this->request->getFiles();
 
             $uid = UUID::v4();
+            $names = "";
 
             if($files){
-                $targetDir = WRITEPATH . "uploads/" . $uid;
-            
-                $names = "";
+                $file = $files["fileInput"][0]->getName();
 
-                if(!is_dir($targetDir))
-                {
-                    mkdir($targetDir, 0777, true);
-                }
+                if(strlen($file) > 0){
+                    $targetDir = WRITEPATH . "uploads/" . $uid;
+            
     
-                foreach($files["fileInput"] as $file)
-                {
-                    $newName = $file->getName();
-                    $names = $names . " " . $newName;
-                    $file->move($targetDir, $newName);
+                    if(!is_dir($targetDir))
+                    {
+                        mkdir($targetDir, 0777, true);
+                    }
+        
+                    foreach($files["fileInput"] as $file)
+                    {
+                        $newName = $file->getName();
+                        $names = $names . " " . $newName;
+                        $file->move($targetDir, $newName);
+                    }
                 }
             }
 
@@ -152,7 +156,6 @@ class TweetsController extends BaseController
         $contentPost->updateByUuid($uuid, $postData);
             
         return redirect()->to('home');
-        
     }
 
     public function view ($uuid) 
@@ -178,8 +181,6 @@ class TweetsController extends BaseController
             header('Content-Length: ' . filesize($filePath));
     
             readfile($filePath);
-        } else {
-            echo "El archivo no existe.";
         }
     }
     
