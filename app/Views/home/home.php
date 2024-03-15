@@ -18,11 +18,12 @@
     <div class="row align-items-top justify-content-center">
         <?php foreach ($posts as $post) : ?>
             <?php if ($post->parent_id === null) : ?>
-                <?php if (!$post->is_public && $post->user_ref_id === $user_id || $post->is_public || in_array("see_all_posts", $permissions)) : ?>
+                <?php if (!$post->is_public && $post->user_ref_id === $user_id
+                 || $post->is_public || in_array("see_all_posts", $permissions)) : ?>
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <?php echo $post->text; ?>
+                            <div class="main"><?php echo $post->text; ?></div>
                             <?php echo $post->is_public ? 'Public' : 'Privat'; ?>
                             <?php echo "(" . $post->created_at . ")" ?>
                             <?php if ($user_id === $post->user_ref_id || in_array("delete_all_posts", $permissions)) : ?>
