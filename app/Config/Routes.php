@@ -19,3 +19,4 @@ $routes->post('/removePost', 'TweetsController::removePost', ['filter' => 'auth'
 $routes->post('/editPost', 'TweetsController::editPostView', ['filter' => 'auth']);
 $routes->post('/editData', 'TweetsController::editPost', ['filter' => 'auth']);
 $routes->get('/piw/(:any)', 'TweetsController::view/$1', ['filter' => 'auth']);
+$routes->post('/download', 'TweetsController::download', ['filter' => 'auth']);

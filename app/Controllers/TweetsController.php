@@ -53,18 +53,38 @@ class TweetsController extends BaseController
             $user_id = intval(session()->get('user_id'));
             $uuid = $this->request->getPost('uuid');
 
+            $files = $this->request->getFiles();
+
+            $targetDir = WRITEPATH . "uploads/" . session()->get('user_id');
+
+            $names = "";
+
+            if(!is_dir($targetDir))
+            {
+                mkdir($targetDir, 0777, true);
+            }
+
+            foreach($files["fileInput"] as $file)
+            {
+                $newName = $file->getName();
+                $names = $names . " " . $newName;
+                $file->move($targetDir, $newName);
+            }
+
             if(!$post_id){
                 $postData = [
                     'id' =>  UUID::v4(),
                     'text' => $content,
-                    'user_ref_id' => $user_id
+                    'user_ref_id' => $user_id,
+                    'files' => $names
                 ];
             }else{
                 $postData = [
                     'id' =>  UUID::v4(),
                     'text' => $content,
                     'parent_id' => $post_id,
-                    'user_ref_id' => $user_id
+                    'user_ref_id' => $user_id,
+                    'files' => $names
                 ];
             }
             
@@ -140,4 +160,22 @@ class TweetsController extends BaseController
 
         return view('home/view', $data);
     }
+
+    public function download() 
+    {
+        $file = $this->request->getPost('file');
+    
+        $filePath = WRITEPATH . "uploads/" . session()->get('user_id') . "/" . $file;
+    
+        if (file_exists($filePath)) {
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
+            header('Content-Length: ' . filesize($filePath));
+    
+            readfile($filePath);
+        } else {
+            echo "El archivo no existe.";
+        }
+    }
+    
 }

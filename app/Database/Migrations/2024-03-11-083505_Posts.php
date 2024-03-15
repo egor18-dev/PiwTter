@@ -35,6 +35,10 @@ class Posts extends Migration
                 'constraint'     => 5,
                 'unsigned' => true,
                 'null' => false
+            ],
+            'files' => [
+                'type' => 'TEXT',
+                'default' => null
             ]
         ]);
 

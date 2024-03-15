@@ -24,6 +24,16 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="main"><?php echo $post->text; ?></div>
+                            <?php
+                                $files = explode(" ", $post->files);
+                                for($i = 1; $i < count($files); $i++)
+                                {
+                                    echo form_open(base_url("download"), ['method' => 'post']); 
+                                    echo form_hidden('file', $files[$i]);
+                                    echo form_submit('btnDelete', "Descarregar " . $files[$i] , ['class' => 'btn btn-outline-dark']); 
+                                    echo form_close(); 
+                                }
+                            ?>
                             <?php echo $post->is_public ? 'Public' : 'Privat'; ?>
                             <?php echo "(" . $post->created_at . ")" ?>
                             <?php if ($user_id === $post->user_ref_id || in_array("delete_all_posts", $permissions)) : ?>
@@ -59,6 +69,15 @@
                                         <?php
                                             if (!empty($comment->text))
                                                 echo  $comment->text;
+
+                                                $files = explode(" ", $comment->files);
+                                                for($i = 1; $i < count($files); $i++)
+                                                {
+                                                    echo form_open(base_url("download"), ['method' => 'post']); 
+                                                    echo form_hidden('file', $files[$i]);
+                                                    echo form_submit('btnDelete', "Descarregar " . $files[$i] , ['class' => 'btn btn-outline-dark']); 
+                                                    echo form_close(); 
+                                                }
                                         ?>
                                         </div>
 
@@ -76,9 +95,12 @@
                                     </div>
                                 <?php endif; ?>
                             <?php endforeach; ?>
-                            <?= form_open('/addPost', ['id' => 'frmUsers']) ?>
+                            <?= form_open_multipart('/addPost', ['id' => 'frmUsers', 'enctype' => 'multipart/form-data']) ?>
                             <textarea name="data"></textarea>
                             <?= form_hidden('post_id', $post->id) ?>
+                            <div class="form-group mt-3">
+                            <?= form_upload(['name' => 'fileInput[]', 'id' => 'fileInput', 'class' => 'form-control', 'multiple' => 'multiple']) ?>
+                            </div>
                             <div class="form-group mt-3">
                                  <?=form_hidden('type', 'upload');?>
                                 <?= form_submit('btnSubmit', 'Comentar', ['class' => 'btn btn-outline-dark']) ?>

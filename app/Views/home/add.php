@@ -5,15 +5,16 @@
     <?php $uuid = $uuid??"" ?>
 
     <div class="container-sm min-vh-100 d-flex flex-column align-items-center justify-content-center">
-        
-        <?=form_open( strlen($data) > 0 ? '/editData' : '/addPost', ['id' => 'frmUsers', 'class' => 'border border-dark rounded p-5 w-100'])?>
+    <?= form_open_multipart(strlen($data) > 0 ? '/editData' : '/addPost', ['id' => 'frmUsers', 'class' => 'border border-dark rounded p-5 w-100', 'enctype' => 'multipart/form-data']) ?>
         <h5 class="mb-3 text-uppercase">Fer publicació</h5>
         <textarea id="ID_TEXTAREA" name="data">
-            <?php
-                
+            <?php               
                 if(strlen($data) > 0) echo $data;
             ?>
         </textarea>
+        <div class="form-group mt-3">
+            <?= form_upload(['name' => 'fileInput[]', 'id' => 'fileInput', 'class' => 'form-control', 'multiple' => 'multiple']) ?>
+        </div>
         <div class="form-group mt-3">
             <?=form_hidden('uuid', $uuid);?>
             <?=form_hidden('type', strlen($data) > 0 ? 'edit' : 'upload');?>
@@ -28,6 +29,7 @@
                     <?php foreach (session('uploadPostErrors') as $error): ?>
                         <li><?= esc($error) ?></li>
                     <?php endforeach ?>
+
                 </ul>
             </div>
         </div>
