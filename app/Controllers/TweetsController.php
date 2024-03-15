@@ -55,32 +55,36 @@ class TweetsController extends BaseController
 
             $files = $this->request->getFiles();
 
-            $targetDir = WRITEPATH . "uploads/" . session()->get('user_id');
+            $uid = UUID::v4();
 
-            $names = "";
+            if($files){
+                $targetDir = WRITEPATH . "uploads/" . $uid;
+            
+                $names = "";
 
-            if(!is_dir($targetDir))
-            {
-                mkdir($targetDir, 0777, true);
-            }
-
-            foreach($files["fileInput"] as $file)
-            {
-                $newName = $file->getName();
-                $names = $names . " " . $newName;
-                $file->move($targetDir, $newName);
+                if(!is_dir($targetDir))
+                {
+                    mkdir($targetDir, 0777, true);
+                }
+    
+                foreach($files["fileInput"] as $file)
+                {
+                    $newName = $file->getName();
+                    $names = $names . " " . $newName;
+                    $file->move($targetDir, $newName);
+                }
             }
 
             if(!$post_id){
                 $postData = [
-                    'id' =>  UUID::v4(),
+                    'id' =>  $uid,
                     'text' => $content,
                     'user_ref_id' => $user_id,
                     'files' => $names
                 ];
             }else{
                 $postData = [
-                    'id' =>  UUID::v4(),
+                    'id' =>  $uid,
                     'text' => $content,
                     'parent_id' => $post_id,
                     'user_ref_id' => $user_id,
@@ -164,8 +168,9 @@ class TweetsController extends BaseController
     public function download() 
     {
         $file = $this->request->getPost('file');
+        $uuid = $this->request->getPost('uuid');
     
-        $filePath = WRITEPATH . "uploads/" . session()->get('user_id') . "/" . $file;
+        $filePath = WRITEPATH . "uploads/" . $uuid . "/" . $file;
     
         if (file_exists($filePath)) {
             header('Content-Type: application/octet-stream');

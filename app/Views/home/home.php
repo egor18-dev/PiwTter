@@ -30,6 +30,7 @@
                                 {
                                     echo form_open(base_url("download"), ['method' => 'post']); 
                                     echo form_hidden('file', $files[$i]);
+                                    echo form_hidden('uuid', $post->id);
                                     echo form_submit('btnDelete', "Descarregar " . $files[$i] , ['class' => 'btn btn-outline-dark']); 
                                     echo form_close(); 
                                 }
@@ -75,6 +76,7 @@
                                                 {
                                                     echo form_open(base_url("download"), ['method' => 'post']); 
                                                     echo form_hidden('file', $files[$i]);
+                                                    echo form_hidden('uuid', $comment->id);
                                                     echo form_submit('btnDelete', "Descarregar " . $files[$i] , ['class' => 'btn btn-outline-dark']); 
                                                     echo form_close(); 
                                                 }
