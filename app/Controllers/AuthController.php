@@ -236,4 +236,18 @@ class AuthController extends BaseController
         return view('home/url', $data);
     }
 
+    public function updateUrlVerification ()
+    {
+        $urlUser = $this->request->getPost('url');
+
+        if ($urlUser){
+            $model = new UserModel();
+
+            $data['url'] = $urlUser;
+
+            $model->updateUser(session()->get('user_id'), $data);
+
+            return redirect()->to('urlView');
+        }
+    }
 }
