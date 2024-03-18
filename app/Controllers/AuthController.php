@@ -124,7 +124,7 @@ class AuthController extends BaseController
                 session()->set(['user_id' => $user['user_id']]);
 
                 if($user["secret2fa"]){
-                    return redirect()->to('twoFactor');
+                    return redirect()->to('twoFactorConfirm');
                 }else{
                     return redirect()->to('home');
                 }
@@ -151,8 +151,8 @@ class AuthController extends BaseController
         $secretKey = $google2fa->generateSecretKey(32);
 
         $data['inlineUrl'] = $google2fa->getQRCodeUrl(
-            'Company Name',
-            session()->get('email'),
+            'DAW',
+            'egor.hd16@gmail.com',
             $secretKey
         );
 
@@ -168,4 +168,55 @@ class AuthController extends BaseController
 
         return view('home/twoFactor', $data);
     }
+
+    public function add2fa_post()
+    {
+        $txt2FA = $this->request->getPost('txt2FA');
+        $secretKey = session()->getFlashdata('secretKey');
+
+        $google2fa = new Google2FA();
+        $valid = $google2fa->verifyKey($secretKey, $txt2FA);
+
+
+        if ($valid){
+            $model = new UserModel();
+
+            $data['secret2fa'] = $secretKey;
+
+            $model->updateUser(session()->get('user_id'), $data);
+
+            return redirect()->to(base_url('home'));
+        } else{
+            session()->setFlashdata('faError', ['Codi incorrecte, no hem activat el 2fa.']);
+            return redirect()->to(base_url('twoFactor'));
+        }
+    }
+
+    public function twoFactorConfirm ()
+    {
+        return view('home/twoFactorConfirm');
+    }
+
+    public function twoFactorConfirmPost()
+    {
+        $txt2FA = $this->request->getPost('txt2FA');
+        $userid = session()->get('user_id');
+        
+        if ($userid != null) {
+            $model = new UserModel();
+            $user = $model->getBiUserId($userid);
+            if ($user != null) {
+                $secretKey = $user['secret2fa'];
+                $google2fa = new Google2FA();
+                $valid = $google2fa->verifyKey($secretKey, $txt2FA);
+                if ($valid) { 
+                    return redirect()->to('home');
+                } else {
+                    session()->setFlashdata('faError', ['Codi incorrecte, no hem activat el 2fa.']);
+                    return redirect()->to(base_url('twoFactor'));
+                }
+            } 
+        } 
+    }
+
 }

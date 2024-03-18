@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class UserModel extends Model
 {
     protected $table            = 'users';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'user_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['user', 'password'];
+    protected $allowedFields    = ['user_id', 'user', 'password', 'secret2fa'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -94,6 +94,22 @@ class UserModel extends Model
 
     }
     
-    
+    public function updateUser ($user_id, $data)
+    {
+        $this->update(["user_id" => $user_id], $data);
+
+        return true;
+    }
+
+    public function twoFactorConfirm () 
+    {
+        return view('home/twoFactorConfirm');
+    }
+
+    public function getBiUserId ($userId)
+    {
+        $user = $this->where('user_id', $userId)->first();
+        return $user;
+    }
 
 }

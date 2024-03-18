@@ -12,6 +12,9 @@ $routes->post('/register-user', 'AuthController::registerUser');
 $routes->post('/login', 'AuthController::login');
 $routes->get('/logout', 'AuthController::logout');
 $routes->get('/twoFactor', 'AuthController::twoFactor');
+$routes->post('/activate2fa', 'AuthController::add2fa_post', ['filter' => 'auth']);
+$routes->get('/twoFactorConfirm', 'AuthController::twoFactorConfirm');
+$routes->post('/tryTwoFactor', 'AuthController::twoFactorConfirmPost');
 
 $routes->get('/home', 'TweetsController::retrieveTweets', ['filter' => 'auth']);
 $routes->get('/add', 'TweetsController::addTweet', ['filter' => 'auth']);
