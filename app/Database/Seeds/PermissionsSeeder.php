@@ -11,6 +11,7 @@ class PermissionsSeeder extends Seeder
         $data = [
             ['name' => 'delete_all_posts'],
             ['name' => 'see_all_posts'],
+            ['name' => 'can_moderate'],
         ];
 
         $this->db->table('permissions')->insertBatch($data);

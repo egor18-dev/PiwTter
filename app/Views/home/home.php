@@ -11,6 +11,7 @@
 <div class="container-fluid d-flex align-items-center justify-content-center p-3 bg-dark">
     <nav>
         <a href="/add" class="text-white">Afegir publicació</a>
+        <a href="/twoFactor" class="text-white">2fa</a>
         <a href="/urlView" class="text-white">Url visualització</a>
         <a href="/logout" class="text-white">Tancar sessió</a>
     </nav>
@@ -61,6 +62,28 @@
                                             <?php echo form_submit('btnDelete', $post->is_public ? 'Public' : 'Privat', ['class' => 'btn btn-outline-success w-100']); ?>
                                         <?php echo form_close(); ?>
                                     </div>
+                                    <?php if (in_array("can_moderate", $permissions)) : ?>
+                                        <div class="col-lg-12 m-0 p-0 mt-2">
+                                            <?php echo form_open(base_url("editData"), ['method' => 'post']); ?>
+                                                <?php echo form_hidden('data', $post->text); ?>
+                                                <?php echo form_hidden('uuid', $post->id); ?>
+                                                <?php echo form_hidden('is_public', $post->is_public); ?>
+                                                <?php echo form_hidden('action', "edit"); ?>
+                                                <?php echo form_submit('btnDelete', 'Adient', ['class' => 'btn btn-outline-primary w-100']); ?>
+                                            <?php echo form_close(); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if (in_array("can_moderate", $permissions)) : ?>
+                                        <div class="col-lg-12 m-0 p-0 mt-2">
+                                            <?php echo form_open(base_url("editData"), ['method' => 'post']); ?>
+                                                <?php echo form_hidden('data', $post->text); ?>
+                                                <?php echo form_hidden('uuid', $post->id); ?>
+                                                <?php echo form_hidden('is_public', $post->is_public); ?>
+                                                <?php echo form_hidden('action', "edit"); ?>
+                                                <?php echo form_submit('btnDelete', 'No adient', ['class' => 'btn btn-outline-danger w-100']); ?>
+                                            <?php echo form_close(); ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>      
                             <?php endif; ?>
                             <h6>Comentaris: </h6>

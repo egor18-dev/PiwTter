@@ -132,7 +132,7 @@ class AuthController extends BaseController
                 if($user["secret2fa"]){
                     return redirect()->to('twoFactorConfirm');
                 }else{
-                    return redirect()->to('twoFactor');
+                    return redirect()->to('home');
                 }
                 
             }
