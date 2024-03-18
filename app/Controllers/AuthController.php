@@ -16,6 +16,8 @@ use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Encoder\QrCodeEncoder;
 use Endroid\QrCode\QrCode;
 
+use App\Libraries\UUID;
+
 class AuthController extends BaseController
 {
 
@@ -53,6 +55,7 @@ class AuthController extends BaseController
                 'required' => 'Introdueix una contrasenya.',
                 'min_length' => 'La contrasenya ha de tenir 8 caràcters.',
             ],
+            
         ];
 
         if($this->validate($validationRules, $validationMessages)){
@@ -65,10 +68,13 @@ class AuthController extends BaseController
             $recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $recaptchaSecret . '&response=' . $recaptchaResponse . '&remoteip=' . $remoteIp;
             $recaptcha = json_decode(file_get_contents($recaptchaUrl));
 
+            $uuid = UUID::v4();
+
             if ($recaptcha->success) {
                 $userData = [
                     'user' => $user,
-                    'password' => password_hash($password, PASSWORD_DEFAULT)
+                    'password' => password_hash($password, PASSWORD_DEFAULT),
+                    'url' => $uuid 
                 ];
             
                 $userModel = new UserModel();
@@ -217,6 +223,17 @@ class AuthController extends BaseController
                 }
             } 
         } 
+    }
+
+    public function urlVerification ()
+    {
+        $model = new UserModel();
+
+        $user = $model->getBiUserId(session()->get('user_id'));
+
+        $data['url'] = $user['url'];
+
+        return view('home/url', $data);
     }
 
 }

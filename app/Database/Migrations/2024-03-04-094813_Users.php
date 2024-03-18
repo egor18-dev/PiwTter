@@ -23,6 +23,10 @@ class Users extends Migration
                 'type' => 'TEXT',
                 'constraint' => '255',
             ],
+            'url' => [
+                'type' => 'VARCHAR',
+                'constraint' => '255'
+            ]
         ]);
         $this->forge->addKey('user_id', true);
         $this->forge->createTable('users');
