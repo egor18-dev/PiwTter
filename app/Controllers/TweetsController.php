@@ -154,17 +154,20 @@ class TweetsController extends BaseController
         $uuid = $this->request->getPost('uuid');
         $is_public = $this->request->getPost('is_public')??"";
         $action = $this->request->getPost('action')??"";
+        $allowed = $this->request->getPost('allowed')??"";
 
         if($action !== ""){
             $postData = [
-                'is_public' => !intval($is_public)
+                'is_public' => !intval($is_public),
+                "allowed" => $allowed === "yes" ? true : false,
             ];
         }else{
             $postData = [
                 'text' => $content,
+                "allowed" => $allowed === "yes" ? true : false,
             ];
         }
-            
+
         $contentPost = new PostModel();
         $contentPost->updateByUuid($uuid, $postData);
             

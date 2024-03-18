@@ -54,33 +54,21 @@
                                         <?php echo form_close(); ?>
                                     </div>
                                     <div class="col-lg-12 m-0 p-0">
-                                        <?php echo form_open(base_url("editData"), ['method' => 'post']); ?>
-                                            <?php echo form_hidden('data', $post->text); ?>
+                                        <?php echo form_open(base_url("editPost"), ['method' => 'post']); ?>
                                             <?php echo form_hidden('uuid', $post->id); ?>
                                             <?php echo form_hidden('is_public', $post->is_public); ?>
                                             <?php echo form_hidden('action', "edit"); ?>
-                                            <?php echo form_submit('btnDelete', $post->is_public ? 'Public' : 'Privat', ['class' => 'btn btn-outline-success w-100']); ?>
+                                            <?php echo form_submit('btnEdit', $post->is_public ? 'Public' : 'Privat', ['class' => 'btn btn-outline-success w-100']); ?>
                                         <?php echo form_close(); ?>
                                     </div>
                                     <?php if (in_array("can_moderate", $permissions)) : ?>
                                         <div class="col-lg-12 m-0 p-0 mt-2">
                                             <?php echo form_open(base_url("editData"), ['method' => 'post']); ?>
-                                                <?php echo form_hidden('data', $post->text); ?>
                                                 <?php echo form_hidden('uuid', $post->id); ?>
-                                                <?php echo form_hidden('is_public', $post->is_public); ?>
-                                                <?php echo form_hidden('action', "edit"); ?>
-                                                <?php echo form_submit('btnDelete', 'Adient', ['class' => 'btn btn-outline-primary w-100']); ?>
-                                            <?php echo form_close(); ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if (in_array("can_moderate", $permissions)) : ?>
-                                        <div class="col-lg-12 m-0 p-0 mt-2">
-                                            <?php echo form_open(base_url("editData"), ['method' => 'post']); ?>
                                                 <?php echo form_hidden('data', $post->text); ?>
-                                                <?php echo form_hidden('uuid', $post->id); ?>
-                                                <?php echo form_hidden('is_public', $post->is_public); ?>
+                                                <?php echo form_hidden('allowed', $post->allowed === "1" ? "no" : "yes"); ?>
                                                 <?php echo form_hidden('action', "edit"); ?>
-                                                <?php echo form_submit('btnDelete', 'No adient', ['class' => 'btn btn-outline-danger w-100']); ?>
+                                                <?php echo form_submit('btnDelete', $post->allowed ? "Adient" : "No adient", ['class' => !$post->allowed ? 'btn btn-outline-danger w-100' : 'btn btn-outline-primary w-100']); ?>
                                             <?php echo form_close(); ?>
                                         </div>
                                     <?php endif; ?>

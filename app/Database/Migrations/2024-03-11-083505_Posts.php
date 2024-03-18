@@ -39,6 +39,10 @@ class Posts extends Migration
             'files' => [
                 'type' => 'TEXT',
                 'default' => null
+            ],
+            'allowed' => [
+                'type' => 'BOOLEAN',
+                'default' => true
             ]
         ]);
 
