@@ -197,4 +197,31 @@ class TweetsController extends BaseController
         }
     }
     
+    public function viewUserPosts($url)
+    {
+        $userModel = new UserModel();
+        $postModel = new PostModel();
+
+        $user = $userModel->getByUserUrl($url);
+
+        if($user)
+        {
+            $posts = $postModel->getPostsById($user["user_id"]);
+
+            $permissions = $userModel->get_permissions_by_role_id();
+
+            $data['posts'] = $posts;
+            $data['user_id'] = session()->get('user_id');
+            $data['permissions'] = $permissions;
+
+            if($posts){
+                return view('home/home', $data);
+            }else{
+                redirect()->to('home');
+            }
+        }else{
+            redirect()->to('home');
+        } 
+    }
+
 }

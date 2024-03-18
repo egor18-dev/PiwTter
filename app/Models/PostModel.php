@@ -57,6 +57,17 @@ class PostModel extends Model
         }
     }
 
+    public function getPostsById($id)
+    {
+        $query = $this->where('user_ref_id', $id)->get();
+
+        if($query->getNumRows() > 0){
+            return $query->getResult();
+        }else{
+            return array();
+        }
+    }
+
     public function deletePost($uuid)
     {
         $this->db->table('posts')->where('parent_id', $uuid)->delete();
@@ -73,4 +84,5 @@ class PostModel extends Model
     {
         return $this->update($uuid, $data);
     }
+    
 }

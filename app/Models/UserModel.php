@@ -124,5 +124,11 @@ class UserModel extends Model
         $user = $this->where('user_id', $userId)->first();
         return $user;
     }
+    
+    public function getByUserUrl($url)
+    {
+        $url = $this->where('url', $url)->first();
+        return $url;
+    }
 
 }

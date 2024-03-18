@@ -16,7 +16,7 @@ $routes->post('/activate2fa', 'AuthController::add2fa_post', ['filter' => 'auth'
 $routes->get('/twoFactorConfirm', 'AuthController::twoFactorConfirm');
 $routes->post('/tryTwoFactor', 'AuthController::twoFactorConfirmPost');
 $routes->get('/urlView', 'AuthController::urlVerification');
-$routes->post('/updateUrl', 'AuthController::updateUrlVerification');
+$routes->post('/updateUrl', 'AuthController::updateUrlVerification', ['filter' => 'auth']);
 
 $routes->get('/home', 'TweetsController::retrieveTweets', ['filter' => 'auth']);
 $routes->get('/add', 'TweetsController::addTweet', ['filter' => 'auth']);
@@ -26,3 +26,4 @@ $routes->post('/editPost', 'TweetsController::editPostView', ['filter' => 'auth'
 $routes->post('/editData', 'TweetsController::editPost', ['filter' => 'auth']);
 $routes->get('/piw/(:any)', 'TweetsController::view/$1', ['filter' => 'auth']);
 $routes->post('/download', 'TweetsController::download', ['filter' => 'auth']);
+$routes->get('/piws/(:any)', 'TweetsController::viewUserPosts/$1');
