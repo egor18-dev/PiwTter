@@ -11,6 +11,7 @@ $routes->get('/sign-in', 'AuthController::signIn');
 $routes->post('/register-user', 'AuthController::registerUser');
 $routes->post('/login', 'AuthController::login');
 $routes->get('/logout', 'AuthController::logout');
+$routes->get('/twoFactor', 'AuthController::twoFactor');
 
 $routes->get('/home', 'TweetsController::retrieveTweets', ['filter' => 'auth']);
 $routes->get('/add', 'TweetsController::addTweet', ['filter' => 'auth']);

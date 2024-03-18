@@ -11,6 +11,7 @@
         </div>
         <div class="form-group mt-3">
             <h6 class="fw-normal mb-3">Ja tens usuari? <a class="fw-bold" href="<?php echo base_url('sign-in') ?>">Inicia sesió</a></h6>
+            <div class="g-recaptcha mb-3" name="g-recaptcha-response" data-sitekey="<?php echo "6LebK5wpAAAAAIaDbHO0I6mt3ez7MfKqMSUQZt3B"; ?>"></div>
             <?=form_submit('btnSubmit', 'Registrar', ['class' => 'btn btn-outline-dark'])?>
         </div>
         <?=form_close()?>

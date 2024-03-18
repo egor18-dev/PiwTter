@@ -5,7 +5,16 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
+use PragmaRX\Google2FA\Google2FA;
+
 use App\Models\UserModel;
+use BaconQrCode\Writer;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\ImageRendererConfig;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Encoder\QrCodeEncoder;
+use Endroid\QrCode\QrCode;
 
 class AuthController extends BaseController
 {
@@ -50,13 +59,25 @@ class AuthController extends BaseController
             $user = $this->request->getPost('user');
             $password = $this->request->getPost('password');
             
-            $userData = [
-                'user' => $user,
-                'password' => password_hash($password, PASSWORD_DEFAULT)
-            ];
-        
-            $userModel = new UserModel();
-            $userModel->createUser($userData);
+            $recaptchaResponse = $this->request->getPost('g-recaptcha-response');
+            $recaptchaSecret = '6LebK5wpAAAAAJuijkotEMpYdOtV6WRjaEqbwPJN'; // Aquí deberías poner tu Secret Key
+            $remoteIp = "127.0.0.1";
+            $recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $recaptchaSecret . '&response=' . $recaptchaResponse . '&remoteip=' . $remoteIp;
+            $recaptcha = json_decode(file_get_contents($recaptchaUrl));
+
+            if ($recaptcha->success) {
+                $userData = [
+                    'user' => $user,
+                    'password' => password_hash($password, PASSWORD_DEFAULT)
+                ];
+            
+                $userModel = new UserModel();
+                $userModel->createUser($userData);
+            }else{
+                session()->setFlashdata('signUpErrors', ["Verifica que no ets un robot"]);
+                return view('auth/signUp');
+            }
+
             return redirect()->to('/sign-in');
         }else{
             session()->setFlashdata('signUpErrors', $this->validator->getErrors());
@@ -101,7 +122,13 @@ class AuthController extends BaseController
                 return view('auth/signIn');
             }else{
                 session()->set(['user_id' => $user['user_id']]);
-                return redirect()->to('home');
+
+                if($user["secret2fa"]){
+                    return redirect()->to('twoFactor');
+                }else{
+                    return redirect()->to('home');
+                }
+                
             }
         }else{
             session()->setFlashdata('signInErrors', $this->validator->getErrors());
@@ -116,4 +143,29 @@ class AuthController extends BaseController
         return redirect()->to('sign-in');
     }
 
+    public function twoFactor()
+    {
+        $data['title'] = 'Two factor authentication';
+
+        $google2fa = new Google2FA();
+        $secretKey = $google2fa->generateSecretKey(32);
+
+        $data['inlineUrl'] = $google2fa->getQRCodeUrl(
+            'Company Name',
+            session()->get('email'),
+            $secretKey
+        );
+
+        $writer = new Writer(
+            new ImageRenderer(
+                new RendererStyle(400),
+                new ImagickImageBackEnd()
+            )
+        );
+
+        $data['qrcode_image'] = base64_encode($writer->writeString($data['inlineUrl']));
+        session()->setFlashdata('secretKey', $secretKey);
+
+        return view('home/twoFactor', $data);
+    }
 }
