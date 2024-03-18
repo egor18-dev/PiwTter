@@ -63,7 +63,7 @@ class AuthController extends BaseController
             $password = $this->request->getPost('password');
             
             $recaptchaResponse = $this->request->getPost('g-recaptcha-response');
-            $recaptchaSecret = '6LebK5wpAAAAAJuijkotEMpYdOtV6WRjaEqbwPJN'; // Aquí deberías poner tu Secret Key
+            $recaptchaSecret = '6LebK5wpAAAAAJuijkotEMpYdOtV6WRjaEqbwPJN'; 
             $remoteIp = "127.0.0.1";
             $recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $recaptchaSecret . '&response=' . $recaptchaResponse . '&remoteip=' . $remoteIp;
             $recaptcha = json_decode(file_get_contents($recaptchaUrl));
@@ -132,7 +132,7 @@ class AuthController extends BaseController
                 if($user["secret2fa"]){
                     return redirect()->to('twoFactorConfirm');
                 }else{
-                    return redirect()->to('home');
+                    return redirect()->to('twoFactor');
                 }
                 
             }

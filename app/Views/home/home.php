@@ -11,7 +11,6 @@
 <div class="container-fluid d-flex align-items-center justify-content-center p-3 bg-dark">
     <nav>
         <a href="/add" class="text-white">Afegir publicació</a>
-        <a href="/twoFactor" class="text-white">2fa</a>
         <a href="/urlView" class="text-white">Url visualització</a>
         <a href="/logout" class="text-white">Tancar sessió</a>
     </nav>
