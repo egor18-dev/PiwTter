@@ -101,6 +101,19 @@ class UserModel extends Model
         return true;
     }
 
+    public function updateUrlUser($user_id, $data)
+    {
+        $user = $this->where('url', $data["url"])->first();
+        
+        if($user){
+            return false;
+        }else{
+            $this->update(["user_id" => $user_id], $data);
+            return true;
+        }
+
+    }
+
     public function twoFactorConfirm () 
     {
         return view('home/twoFactorConfirm');

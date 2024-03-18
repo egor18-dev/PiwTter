@@ -245,7 +245,11 @@ class AuthController extends BaseController
 
             $data['url'] = $urlUser;
 
-            $model->updateUser(session()->get('user_id'), $data);
+            $isUserUpdated = $model->updateUrlUser(session()->get('user_id'), $data);
+
+            if(!$isUserUpdated){
+                session()->setFlashdata('urlError', ["Ja existeix un usuari amb aquesta URL"]);
+            }
 
             return redirect()->to('urlView');
         }
