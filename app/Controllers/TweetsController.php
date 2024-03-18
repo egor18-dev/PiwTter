@@ -227,4 +227,24 @@ class TweetsController extends BaseController
         } 
     }
 
+    public function noValidatePosts ()
+    {
+        $userModel = new UserModel();
+        $postModel = new PostModel();
+
+        $posts = $postModel->getPostsByAllowedFalse();
+
+        $permissions = $userModel->get_permissions_by_role_id();
+
+            $data['posts'] = $posts;
+            $data['user_id'] = session()->get('user_id');
+            $data['permissions'] = $permissions;
+
+            if($posts){
+                return view('home/home', $data);
+            }else{
+                redirect()->to('home');
+            }
+    }
+
 }

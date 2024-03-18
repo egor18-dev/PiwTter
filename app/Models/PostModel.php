@@ -68,6 +68,17 @@ class PostModel extends Model
         }
     }
 
+    public function getPostsByAllowedFalse()
+    {
+        $query = $this->where('allowed', false)->get();
+
+        if($query->getNumRows() > 0){
+            return $query->getResult();
+        }else{
+            return array();
+        }
+    }
+
     public function deletePost($uuid)
     {
         $this->db->table('posts')->where('parent_id', $uuid)->delete();

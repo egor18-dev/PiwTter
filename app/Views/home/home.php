@@ -13,6 +13,9 @@
         <a href="/add" class="text-white">Afegir publicació</a>
         <a href="/twoFactor" class="text-white">2fa</a>
         <a href="/urlView" class="text-white">Url visualització</a>
+        <?php if (in_array("can_moderate", $permissions)) : ?>
+            <a href="/no-validate-posts" class="text-white">Pubilicacions no validades</a>
+        <?php endif; ?>
         <a href="/logout" class="text-white">Tancar sessió</a>
     </nav>
 </div>

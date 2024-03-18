@@ -27,3 +27,4 @@ $routes->post('/editData', 'TweetsController::editPost', ['filter' => 'auth']);
 $routes->get('/piw/(:any)', 'TweetsController::view/$1', ['filter' => 'auth']);
 $routes->post('/download', 'TweetsController::download', ['filter' => 'auth']);
 $routes->get('/piws/(:any)', 'TweetsController::viewUserPosts/$1');
+$routes->get('no-validate-posts', 'TweetsController::noValidatePosts');
