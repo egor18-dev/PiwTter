@@ -110,7 +110,7 @@ class ApiController extends ResourceController
             }
             
 
-            return $this->response->setStatusCode(200)->setJSON("Usuari creat");
+            return $this->response->setStatusCode(200)->setJSON("Publicació pujada");
         }else{
             return $this->response->setStatusCode(400)->setJSON("Camps formulari incorrecte");
         }
@@ -125,7 +125,7 @@ class ApiController extends ResourceController
      */
     public function edit($id = null)
     {
-        //
+        
     }
 
     /**
@@ -135,10 +135,30 @@ class ApiController extends ResourceController
      *
      * @return ResponseInterface
      */
-    public function update($id = null)
+   public function update($id = null)
     {
-        //
-    }
+
+        $content = $this->request->getVar('data');
+        $uuid = $id;
+        $is_public = $this->request->getVar('is_public') ?? "";
+        $action = $this->request->getVar('action') ?? "";
+
+        if ($action !== "") {
+            $postData = [
+                'is_public' => !intval($is_public)
+            ];
+        } else {
+            $postData = [
+                'text' => $content,
+            ];
+        }
+
+        $postModel = new PostModel();
+        $postModel->updateByUuid($uuid, $postData);
+
+        return $this->response->setStatusCode(200)->setJSON($postData);
+}
+
 
     /**
      * Delete the designated resource object from the model.
