@@ -64,7 +64,6 @@ class TweetsController extends BaseController
                 if(strlen($file) > 0){
                     $targetDir = WRITEPATH . "uploads/" . $uid;
             
-    
                     if(!is_dir($targetDir))
                     {
                         mkdir($targetDir, 0777, true);

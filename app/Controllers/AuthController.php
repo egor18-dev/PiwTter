@@ -5,7 +5,16 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
+use PragmaRX\Google2FA\Google2FA;
+
 use App\Models\UserModel;
+use BaconQrCode\Writer;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\ImageRendererConfig;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Encoder\QrCodeEncoder;
+use Endroid\QrCode\QrCode;
 
 class AuthController extends BaseController
 {
@@ -101,7 +110,13 @@ class AuthController extends BaseController
                 return view('auth/signIn');
             }else{
                 session()->set(['user_id' => $user['user_id']]);
-                return redirect()->to('home');
+
+                if($user["secret2fa"]){
+                    return redirect()->to('twoFactor');
+                }else{
+                    return redirect()->to('home');
+                }
+                
             }
         }else{
             session()->setFlashdata('signInErrors', $this->validator->getErrors());
@@ -116,4 +131,8 @@ class AuthController extends BaseController
         return redirect()->to('sign-in');
     }
 
+    public function twoFactor()
+    {
+        
+    }
 }

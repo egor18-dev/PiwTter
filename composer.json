@@ -11,8 +11,12 @@
     },
     "require": {
         "php": "^7.4 || ^8.0",
+        "bacon/bacon-qr-code": "^2.0",
         "codeigniter4/framework": "^4.0",
-        "google/recaptcha": "^1.3"
+        "endroid/qr-code": "^5.0",
+        "google/recaptcha": "^1.3",
+        "mehdibo/codeigniter-recaptcha": "^1.1",
+        "pragmarx/google2fa": "^8.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",
