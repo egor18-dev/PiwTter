@@ -27,3 +27,4 @@ $routes->get('/getPiws', 'ApiController::index');
 $routes->get('/getPiw/(:any)', 'ApiController::show/$1');
 $routes->post('/addPiew', 'ApiController::create');
 $routes->put('/updatePiew/(:any)', 'ApiController::update/$1');
+$routes->delete('/deletePiew/(:any)', 'ApiController::delete/$1');

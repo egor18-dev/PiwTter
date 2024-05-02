@@ -29,19 +29,13 @@ class ApiController extends ResourceController
      */
     public function show($id = null)
     {
-        $contentPost = new PostModel();
-        $data = $contentPost->getByUuid($id);
-        return $this->response->setStatusCode(200)->setJson($data);
-    }
-
-    /**
-     * Return a new resource object, with default properties.
-     *
-     * @return ResponseInterface
-     */
-    public function new()
-    {
-        //
+        try {
+            $contentPost = new PostModel();
+            $data = $contentPost->getByUuid($id);
+            return $this->response->setStatusCode(200)->setJson($data);
+        } catch (\Exception $e) {
+            return $this->response->setStatusCode(500)->setJSON(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -57,42 +51,40 @@ class ApiController extends ResourceController
             'data' => 'required'
         ];
 
-        if($this->validate($validationRules)){
-            $content = $this->request->getPost('data');
-            $post_id = $this->request->getPost('post_id');
-            $user_id = $this->request->getPost('user_id');
-            $files = $this->request->getFiles();
-            $uid = UUID::v4();
-            $names = "";
+        if (!$this->validate($validationRules)) {
+            return $this->response->setStatusCode(400)->setJSON("Camps formulari incorrecte");
+        }
 
-            if($files){
-                $file = $files["fileInput"][0]->getName();
+        $content = $this->request->getPost('data');
+        $post_id = $this->request->getPost('post_id');
+        $user_id = $this->request->getPost('user_id');
+        $files = $this->request->getFiles();
+        $uid = UUID::v4();
+        $names = "";
 
-                if(strlen($file) > 0){
-                    $targetDir = WRITEPATH . "uploads/" . $uid;
+        try {
+            if ($files) {
+                $targetDir = WRITEPATH . "uploads/" . $uid;
             
-                    if(!is_dir($targetDir))
-                    {
-                        mkdir($targetDir, 0777, true);
-                    }
-        
-                    foreach($files["fileInput"] as $file)
-                    {
-                        $newName = $file->getName();
-                        $names = $names . " " . $newName;
-                        $file->move($targetDir, $newName);
-                    }
+                if (!is_dir($targetDir)) {
+                    mkdir($targetDir, 0777, true);
+                }
+    
+                foreach ($files["fileInput"] as $file) {
+                    $newName = $file->getName();
+                    $names .= " " . $newName;
+                    $file->move($targetDir, $newName);
                 }
             }
 
-            if(!$post_id){
+            if (!$post_id) {
                 $postData = [
                     'id' =>  $uid,
                     'text' => $content,
                     'user_ref_id' => $user_id,
                     'files' => $names
                 ];
-            }else{
+            } else {
                 $postData = [
                     'id' =>  $uid,
                     'text' => $content,
@@ -102,17 +94,12 @@ class ApiController extends ResourceController
                 ];
             }
             
-            try{
-                $contentPost = new PostModel();
-                $contentPost->createPost($postData);
-            }catch(Exception $e){
-                return $this->response->setStatusCode(500)->setJSON($e);
-            }
-            
+            $contentPost = new PostModel();
+            $contentPost->createPost($postData);
 
             return $this->response->setStatusCode(200)->setJSON("Publicació pujada");
-        }else{
-            return $this->response->setStatusCode(400)->setJSON("Camps formulari incorrecte");
+        } catch (\Exception $e) {
+            return $this->response->setStatusCode(500)->setJSON(['error' => $e->getMessage()]);
         }
     }
 
@@ -125,7 +112,28 @@ class ApiController extends ResourceController
      */
     public function edit($id = null)
     {
-        
+        try {
+            $content = $this->request->getVar('data');
+            $uuid = $id;
+            $is_public = $this->request->getVar('is_public') ?? "";
+            $action = $this->request->getVar('action') ?? "";
+
+            if ($action !== "") {
+                $postData = [
+                    'is_public' => !intval($is_public)
+                ];
+            } else {
+                $postData = [
+                    'text' => $content,
+                ];
+            }
+
+            $postModel = new PostModel();
+            $postModel->updateByUuid($uuid, $postData);
+            return $this->response->setStatusCode(200)->setJSON($postData);
+        } catch (\Exception $e) {
+            return $this->response->setStatusCode(500)->setJSON(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -135,30 +143,31 @@ class ApiController extends ResourceController
      *
      * @return ResponseInterface
      */
-   public function update($id = null)
+    public function update($id = null)
     {
+        try {
+            $content = $this->request->getVar('data');
+            $uuid = $id;
+            $is_public = $this->request->getVar('is_public') ?? "";
+            $action = $this->request->getVar('action') ?? "";
 
-        $content = $this->request->getVar('data');
-        $uuid = $id;
-        $is_public = $this->request->getVar('is_public') ?? "";
-        $action = $this->request->getVar('action') ?? "";
+            if ($action !== "") {
+                $postData = [
+                    'is_public' => !intval($is_public)
+                ];
+            } else {
+                $postData = [
+                    'text' => $content,
+                ];
+            }
 
-        if ($action !== "") {
-            $postData = [
-                'is_public' => !intval($is_public)
-            ];
-        } else {
-            $postData = [
-                'text' => $content,
-            ];
+            $postModel = new PostModel();
+            $postModel->updateByUuid($uuid, $postData);
+            return $this->response->setStatusCode(200)->setJSON($postData);
+        } catch (\Exception $e) {
+            return $this->response->setStatusCode(500)->setJSON(['error' => $e->getMessage()]);
         }
-
-        $postModel = new PostModel();
-        $postModel->updateByUuid($uuid, $postData);
-
-        return $this->response->setStatusCode(200)->setJSON($postData);
-}
-
+    }
 
     /**
      * Delete the designated resource object from the model.
@@ -169,6 +178,12 @@ class ApiController extends ResourceController
      */
     public function delete($id = null)
     {
-        //
+        try {
+            $postModel = new PostModel();
+            $postModel->deletePost($id);
+            return $this->response->setStatusCode(200)->setJson("Deleted");
+        } catch (\Exception $e) {
+            return $this->response->setStatusCode(500)->setJSON(['error' => $e->getMessage()]);
+        }
     }
 }
