@@ -62,21 +62,21 @@ class ApiController extends ResourceController
         $uid = UUID::v4();
         $names = "";
 
-        try {
-            if ($files) {
-                $targetDir = WRITEPATH . "uploads/" . $uid;
-            
-                if (!is_dir($targetDir)) {
-                    mkdir($targetDir, 0777, true);
-                }
-    
-                foreach ($files["fileInput"] as $file) {
-                    $newName = $file->getName();
-                    $names .= " " . $newName;
-                    $file->move($targetDir, $newName);
-                }
+        if ($files) {
+            $targetDir = WRITEPATH . "uploads/" . $uid;
+        
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true);
             }
 
+            foreach ($files["fileInput"] as $file) {
+                $newName = $file->getName();
+                $names .= " " . $newName;
+                $file->move($targetDir, $newName);
+            }
+        }
+
+        try {
             if (!$post_id) {
                 $postData = [
                     'id' =>  $uid,
